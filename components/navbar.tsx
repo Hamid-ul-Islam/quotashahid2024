@@ -11,13 +11,17 @@ const navItemsLg = [
   },
   {
     title: 'Contact Us',
-    url: '/contact',
+    url: 'https://about.me/hamid-ul-islam',
   },
 ];
 const navItemsSm = [
   {
     title: 'Submit_Info',
     url: '/submit',
+  },
+  {
+    title: 'Contact',
+    url: 'https://about.me/hamid-ul-islam',
   },
 ];
 

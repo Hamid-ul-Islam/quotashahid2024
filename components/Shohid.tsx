@@ -1,8 +1,49 @@
+'use client';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { shohidDB } from '../lib/data';
 import Heading from './typography/heading';
 import Paragraph from './typography/paragraph';
 import SubHeading from './typography/sub-heading';
+interface DataItem {
+  imageUrl: string;
+  name: string;
+  role: string;
+  institution: string;
+  date: string;
+  rank: string;
+}
+
+const ITEMS_PER_PAGE = 10;
 export default function Shohid() {
+  const [data, setData] = useState<DataItem[]>([]);
+  const [page, setPage] = useState<number>(1);
+  const observer = useRef<IntersectionObserver | null>(null);
+
+  const loadMoreData = (page: number) => {
+    console.log('Loading more data for page:', page); // Debugging line
+    const startIndex = (page - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const newData = shohidDB?.slice(startIndex, endIndex);
+    console.log('New data loaded:', newData); // Debugging line
+    if (newData.length) {
+      setData((prevData) => [...prevData, ...newData]);
+    }
+  };
+
+  const lastDataElementRef = useCallback((node: HTMLDivElement | null) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        console.log('Last data element is intersecting'); // Debugging line
+        setPage((prevPage) => prevPage + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, []);
+
+  useEffect(() => {
+    loadMoreData(page);
+  }, [page]);
   return (
     <div className="mb-10">
       <div>
@@ -22,7 +63,7 @@ export default function Shohid() {
         {shohidDB?.map((shohid, index) => (
           <div key={index} className="rounded-xl p-3 bg-gray-50 border">
             <div className="relative">
-              <img src={shohid?.imageUrl} alt="" />
+              <img src={shohid?.imageUrl} alt={shohid?.name} />
               <span className="absolute top-0 right-0 px-3 py-1 bg-red-900 text-white">
                 {index + 1}
               </span>
