@@ -49,8 +49,10 @@ const InfiniteScroll: React.FC = () => {
 
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
-    const filtered = data.filter((item) =>
-      item.name.toLowerCase().includes(lowercasedQuery),
+    const filtered = data.filter(
+      (item) =>
+        item.name.toLowerCase().includes(lowercasedQuery) ||
+        item.institution.toLowerCase().includes(lowercasedQuery),
     );
     setFilteredData(filtered);
   }, [data, searchQuery]);
@@ -89,14 +91,14 @@ const InfiniteScroll: React.FC = () => {
   return (
     <div className="mb-10">
       <div>
-        <div className="flex items-center justify-between">
+        <div className="md:flex items-center justify-between gap-10">
           <Heading className="">
             List of <span className="text-red-900">Martyrs(Shahid)</span> in the
             Movement
           </Heading>
-          <div className="relative">
+          <div className="relative mt-5 md:mt-0">
             <input
-              className="border w-[400px] border-gray-300 bg-gray-50 rounded px-3 py-2 outline-gray-700 placeholder:text-gray-600"
+              className="border w-full md:w-[400px] border-gray-300 bg-gray-50 rounded px-3 py-2 outline-gray-700 placeholder:text-gray-600"
               type="text"
               value={searchQuery}
               onChange={handleSearchChange}
