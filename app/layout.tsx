@@ -1,6 +1,7 @@
 import Navbar from '@/components/navbar';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import Head from 'next/head';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -56,6 +57,42 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <meta
+          name="description"
+          content="A website dedicated to documenting and educating future generations about the 2024 Bangladesh quota reform movement."
+        ></meta>
+        <meta
+          property="og:url"
+          content="https://www.quotashahid2024.com/"
+        ></meta>
+        <meta property="og:type" content="website"></meta>
+        <meta property="og:title" content="Quota Shahid 2024" />
+        <meta
+          property="og:description"
+          content="A website dedicated to documenting and educating future generations about the 2024 Bangladesh quota reform movement."
+        />
+        <meta
+          property="og:image"
+          content="https://opengraph.b-cdn.net/production/images/82c74f91-c68a-491c-80cc-1274adc54f7e.png?token=TlQgbD2-tcqeQcU7YVNC-Qi9JsGjdeoVtoiwZe_VFfY&height=621&width=1200&expires=33258966875"
+        ></meta>
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta property="twitter:domain" content="quotashahid2024.com" />
+        <meta
+          property="twitter:url"
+          content="https://www.quotashahid2024.com/"
+        />
+        <meta name="twitter:title" content="Quota Shahid 2024" />
+        <meta
+          name="twitter:description"
+          content="A website dedicated to documenting and educating future generations about the 2024 Bangladesh quota reform movement."
+        />
+        <meta
+          name="twitter:image"
+          content="https://opengraph.b-cdn.net/production/images/82c74f91-c68a-491c-80cc-1274adc54f7e.png?token=TlQgbD2-tcqeQcU7YVNC-Qi9JsGjdeoVtoiwZe_VFfY&height=621&width=1200&expires=33258966875"
+        />
+      </Head>
       <body className={`${inter.className} max-w-screen-2xl mx-auto px-4`}>
         <Navbar />
         {children}
