@@ -1,5 +1,6 @@
 'use client';
 import { shohidDB as allData } from '@/lib/data';
+import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import Heading from './typography/heading';
 import Paragraph from './typography/paragraph';
@@ -49,7 +50,7 @@ const InfiniteScroll: React.FC = () => {
 
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
-    const filtered = data.filter(
+    const filtered = allData.filter(
       (item) =>
         item.name.toLowerCase().includes(lowercasedQuery) ||
         item.institution.toLowerCase().includes(lowercasedQuery),
@@ -139,7 +140,13 @@ const InfiniteScroll: React.FC = () => {
         {filteredData.map((shohid, index) => (
           <div key={index} className="rounded-xl p-3 bg-gray-50 border">
             <div className="relative">
-              <img src={shohid?.imageUrl} alt={shohid?.name} />
+              <Image
+                width={200}
+                height={200}
+                src={shohid?.imageUrl}
+                alt={shohid?.name}
+                loading="lazy"
+              />
               <span className="absolute top-0 right-0 px-3 py-1 bg-red-900 text-white">
                 {index + 1}
               </span>
@@ -154,7 +161,7 @@ const InfiniteScroll: React.FC = () => {
             </div>
           </div>
         ))}
-        <div className="w-full p-10" ref={lastElementRef}>
+        <div className="w-full p-10">
           {loading && (
             <span className="text-red-900 font-bold text-2xl">
               Loading more data...
