@@ -92,12 +92,20 @@ const InfiniteScroll: React.FC = () => {
   return (
     <div className="mb-10">
       <div>
-        <div className="md:flex items-center justify-between gap-10">
-          <Heading className="">
-            List of <span className="text-red-900">Martyrs(Shahid)</span> in the
-            Movement
-          </Heading>
-          <div className="relative mt-5 md:mt-0">
+        <div className="md:flex  justify-between gap-10">
+          <div>
+            <Heading className="">
+              List of <span className="text-red-900">Martyrs(Shahid)</span> in
+              the Movement
+            </Heading>
+            <Paragraph>
+              These martyrs did not just give their lives; they gifted us a
+              future free from the chains of autocracy. Their courage in the
+              face of overwhelming adversity serves as a beacon of hope and a
+              reminder of the power of unity and determination.
+            </Paragraph>
+          </div>
+          <div className="relative mt-7 md:mt-0">
             <input
               className="border w-full md:w-[400px] border-gray-300 bg-gray-50 rounded px-3 py-2 outline-gray-700 placeholder:text-gray-600"
               type="text"
@@ -105,7 +113,7 @@ const InfiniteScroll: React.FC = () => {
               onChange={handleSearchChange}
               placeholder="Find a Shohid"
             />
-            <span className="absolute right-3 top-1/2 -translate-y-1/2">
+            <span className="absolute right-3 top-3">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -128,12 +136,6 @@ const InfiniteScroll: React.FC = () => {
             </span>
           </div>
         </div>
-        <Paragraph>
-          These martyrs did not just give their lives; they gifted us a future
-          free from the chains of autocracy. Their courage in the face of
-          overwhelming adversity serves as a beacon of hope and a reminder of
-          the power of unity and determination.
-        </Paragraph>
       </div>
       <hr className="my-5 border" />
       <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
