@@ -34,7 +34,7 @@ function Logo() {
 }
 export default function Navbar() {
   return (
-    <div className="py-3 px-3 md:px-16 bg-black/90">
+    <div className="py-3 px-3 md:px-16 bg-black/75">
       <div className="lg:flex hidden items-center justify-between w-full">
         <Logo />
         <nav>
