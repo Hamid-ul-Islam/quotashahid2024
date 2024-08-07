@@ -1,5 +1,6 @@
 'use client';
 import { Carousel, Typography } from '@material-tailwind/react';
+import Head from 'next/head';
 import Image from 'next/image';
 
 const carouselData = [
@@ -43,12 +44,17 @@ export default function CarouselWithContent() {
           key={index}
           className="relative h-full rounded-b-xl overflow-hidden w-full"
         >
+          <Head>
+            <link rel="preload" href={`/${item.image}`} as="image" />
+          </Head>
           <Image
             src={`/${item.image}`}
             alt={item.headline}
             className="h-[600px] w-full object-cover"
             width={1200}
             height={600}
+            quality={50}
+            priority
           />
 
           <div className="absolute inset-0 grid h-full w-full items-center bg-black/60">
