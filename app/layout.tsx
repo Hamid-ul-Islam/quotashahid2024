@@ -58,6 +58,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <Head>
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <meta
           name="description"
           content="A website dedicated to documenting and educating future generations about the 2024 Bangladesh quota reform movement."
