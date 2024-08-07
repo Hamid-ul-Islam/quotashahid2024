@@ -1,7 +1,7 @@
 'use client';
 import { shohidDB as allData } from '@/lib/data';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Heading from './typography/heading';
 import Paragraph from './typography/paragraph';
 import SubHeading from './typography/sub-heading';
@@ -19,35 +19,6 @@ const InfiniteScroll: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredData, setFilteredData] = useState<DataItem[]>([]);
 
-  const [data, setData] = useState<DataItem[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [hasMore, setHasMore] = useState<boolean>(true);
-  const page = useRef<number>(1);
-  const pageSize = 10; // Number of items per page
-
-  const fetchData = () => {
-    if (loading || !hasMore) return;
-
-    setLoading(true);
-    console.log('Fetching data...');
-    const startIndex = (page.current - 1) * pageSize;
-    const endIndex = startIndex + pageSize;
-    const newData = allData.slice(startIndex, endIndex);
-
-    if (newData.length === 0) {
-      setHasMore(false);
-    } else {
-      setData((prevData) => [...prevData, ...newData]);
-      page.current += 1;
-    }
-
-    setLoading(false);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   useEffect(() => {
     const lowercasedQuery = searchQuery.toLowerCase();
     const filtered = allData.filter(
@@ -56,34 +27,7 @@ const InfiniteScroll: React.FC = () => {
         item.institution.toLowerCase().includes(lowercasedQuery),
     );
     setFilteredData(filtered);
-  }, [data, searchQuery]);
-
-  const lastElementRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observerCallback: IntersectionObserverCallback = (entries) => {
-      console.log('Intersection observer callback triggered');
-      if (entries[0].isIntersecting && hasMore && !loading) {
-        fetchData();
-      }
-    };
-
-    const observer = new IntersectionObserver(observerCallback, {
-      root: null, // or specify a scroll container if needed
-      rootMargin: '0px',
-      threshold: 0.1, // or try other values
-    });
-
-    if (lastElementRef.current) {
-      observer.observe(lastElementRef.current);
-    }
-
-    return () => {
-      if (lastElementRef.current) {
-        observer.unobserve(lastElementRef.current);
-      }
-    };
-  }, [loading, hasMore]);
+  }, [searchQuery]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value);
@@ -138,17 +82,20 @@ const InfiniteScroll: React.FC = () => {
         </div>
       </div>
       <hr className="my-5 border" />
-      <div className="grid grid-cols-2 md:grid-cols-5 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
         {filteredData.map((shohid, index) => (
-          <div key={index} className="rounded-xl p-3 bg-gray-50 border">
+          <div key={index} className="rounded-xl p-6 bg-gray-50 border">
             <div className="relative">
               <Image
-                width={200}
-                height={200}
+                className="w-full h-full object-cover"
                 src={shohid?.imageUrl}
                 alt={shohid?.name}
                 loading="lazy"
+                width={300}
+                height={300}
+                layout="responsive"
               />
+
               <span className="absolute top-0 right-0 px-3 py-1 bg-red-900 text-white">
                 {index + 1}
               </span>
@@ -163,13 +110,6 @@ const InfiniteScroll: React.FC = () => {
             </div>
           </div>
         ))}
-        <div className="w-full p-10">
-          {loading && (
-            <span className="text-red-900 font-bold text-2xl">
-              Loading more data...
-            </span>
-          )}
-        </div>
       </div>
     </div>
   );
